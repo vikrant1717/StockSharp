@@ -7,17 +7,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: ubuntu:24.04
+    # FIX 3: Changed to 20.04 to find the 'libssl1.1' package
+    container: ubuntu:20.04
     steps:
     - uses: actions/checkout@v4
     
-    # NEW STEP: Install prerequisites for 'setup-dotnet' and Embold (curl, wget, libssl)
+    # FIX 2: Install required tools (curl, wget) and libssl1.1
     - name: Install dependencies (curl, wget, libssl1.1)
       run: |
         apt-get update
-        apt-get install curl wget libssl1.1 -y
+        apt-get install curl wget libssl1.1 -y 
     
-    # FIX: This step now runs after necessary tools (curl/wget) are installed
+    # FIX 1: Corrected indentation for 'with' block
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
