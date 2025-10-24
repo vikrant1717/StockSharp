@@ -13,7 +13,7 @@ steps:
 - name: Setup .NET
 uses: actions/setup-dotnet@v4
 with:
-dotnet-version: 3.x.x
+dotnet-version: 3.0.x
 - name: Install libssl dependency
 run: |
 apt-get update
