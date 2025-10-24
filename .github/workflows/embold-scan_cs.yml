@@ -7,18 +7,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # FIX 3: Changed to 20.04 to find the 'libssl1.1' package
     container: ubuntu:20.04
     steps:
     - uses: actions/checkout@v4
     
-    # FIX 2: Install required tools (curl, wget) and libssl1.1
     - name: Install dependencies (curl, wget, libssl1.1)
       run: |
         apt-get update
         apt-get install curl wget libssl1.1 -y 
     
-    # FIX 1: Corrected indentation for 'with' block
+    # NEW STEP: Install Java (OpenJDK 11 is a common, stable version)
+    - name: Install Java for Embold Scanner
+      run: |
+        apt-get install openjdk-11-jre -y
+        
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
