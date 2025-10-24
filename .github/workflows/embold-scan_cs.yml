@@ -10,14 +10,19 @@ jobs:
     container: ubuntu:24.04
     steps:
     - uses: actions/checkout@v4
+    
+    # NEW STEP: Install prerequisites for 'setup-dotnet' and Embold (curl, wget, libssl)
+    - name: Install dependencies (curl, wget, libssl1.1)
+      run: |
+        apt-get update
+        apt-get install curl wget libssl1.1 -y
+    
+    # FIX: This step now runs after necessary tools (curl/wget) are installed
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 3.0.x  # <--- CORRECTED INDENTATION HERE (Line 16 in your original count)
-    - name: Install libssl dependency
-      run: |
-        apt-get update
-        apt-get install libssl1.1 -y
+        dotnet-version: 3.0.x
+        
     - name: Embold Analyse
       run: |
         curl https://v1.embold.io/nfs/CLI/browserstack-codequality-scanner.tar.gz -o browserstack-codequality-scanner-archive.tar.gz
